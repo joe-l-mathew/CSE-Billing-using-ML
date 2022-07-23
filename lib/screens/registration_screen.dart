@@ -120,7 +120,6 @@ class SignupPage extends StatelessWidget {
                                     _consumerNumberConteroller.text),
                                 _passwordConteroller.text,
                                 context);
-
                           } else {
                             showSnackbar(
                                 context: context,
@@ -138,19 +137,19 @@ class SignupPage extends StatelessWidget {
                       //signup user
                     },
                     child: Text("Create Account")),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (builder) {
-                            return LoginScreen();
-                          }),
-                        );
-                      },
-                      child: Text("Already have an account? Login")),
-                )
+                // Align(
+                //   alignment: Alignment.bottomRight,
+                //   child: TextButton(
+                //       onPressed: () {
+                //         Navigator.push(
+                //           context,
+                //           MaterialPageRoute(builder: (builder) {
+                //             return LoginScreen();
+                //           }),
+                //         );
+                //       },
+                //       child: Text("Already have an account? Login")),
+                // )
               ],
             ),
           ),

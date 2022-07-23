@@ -1,8 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_application_csw/firebase/firestore_methods.dart';
+import 'package:flutter_application_csw/provider/scan_pprovider.dart';
 import 'package:flutter_application_csw/provider/user_provider.dart';
 import 'package:flutter_application_csw/screens/scan_page.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
+            Provider.of<ScanProvider>(context, listen: false).setNull();
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -66,36 +67,24 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       )),
+            Text(
+              "History",
+              style: TextStyle(fontSize: 30),
+            ),
             Expanded(
-                child: Provider.of<UserProvider>(context).userModel == null
-                    ? CircularProgressIndicator()
-                    : StreamBuilder(
-                        stream: FirebaseFirestore.instance
-                            .collection('user')
-                            .doc(Provider.of<UserProvider>(context,
-                                    listen: false)
-                                .userModel!
-                                .uid)
-                            .collection('bill')
-                            .snapshots(),
-                        builder: (context,
-                            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                                snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return LinearProgressIndicator();
-                          }
-                          return ListView.separated(
-                              itemBuilder: (BuildContext context, int index) {
-                                return ListTile(
-                                  title: Text("fff"),
-                                );
-                              },
-                              separatorBuilder:
-                                  (BuildContext context, int index) =>
-                                      Divider(),
-                              itemCount: snapshot.data!.docs.length);
-                        }))
+                child: ListView.separated(
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        title:
+                            Text("Consumer number : ${323667 * (index + 1)}"),
+                        subtitle: Text("Name : username${index + 1}"),
+                        trailing: Text(
+                            "${DateTime.now().subtract(Duration(days: 30 * index)).year.toString()}-${DateTime.now().subtract(Duration(days: 30 * index)).month.toString().padLeft(2, '0')}-${DateTime.now().subtract(Duration(days: 30 * index)).day.toString().padLeft(2, '0')}"),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) =>
+                        Divider(),
+                    itemCount: 30))
           ],
         ));
   }
